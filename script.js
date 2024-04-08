@@ -4,16 +4,18 @@ const ctx = canvas.getContext("2d");// webGL - BitmapRenderer
 canvas.width = 448
 canvas.height = 400
 
-//Variables ball
+//VARIABLES PELOTA
 const ballRadius = 10;
-
 //position ball
 let x = canvas.width / 2;
 let y = canvas.height - 30;
-
 //velocity ball
 let positionX = 2;
 let positionY = -2;
+
+//VARIALES PALETA
+const paddleWidth = 30;
+const paddleHeight = 10;
 
 function drawBall() {
     ctx.beginPath();
@@ -27,6 +29,25 @@ function drawBricks() {}
 
 function collisionDetection() {}
 function ballMovement() {
+    if(
+        x + positionX > canvas.width - ballRadius ||
+        x + positionX < ballRadius
+        ) 
+    {
+        positionX = - positionX;
+    }
+
+    if(y + positionY < ballRadius) 
+    {
+        positionY = -positionY;
+    }
+
+    if(y + positionY > canvas.height - ballRadius)
+    {
+        console.log("game over");
+        document.location.reload();
+    }
+    //movemos la pelota
     x += positionX;
     y += positionY;
 }
@@ -45,7 +66,7 @@ function draw() {
 
     //colisiones y movimientos
     // collisionDetection();
-     //ballMovement();
+     ballMovement();
     // paddleMovement();
 
     window.requestAnimationFrame(draw);//60 frames x seg
