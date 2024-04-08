@@ -20,6 +20,9 @@ const paddleHeight = 10;
 let paddlePositionX = (canvas.width - paddleWidth) / 2;
 let paddlePositionY = canvas.height - paddleHeight - 10;
 
+let rightPressed = false;
+let leftPressed = false;
+
 function drawBall() {
     ctx.beginPath();
     ctx.arc(inicialPositionX, inicialPositionY, ballRadius, 0, Math.PI * 2);
@@ -59,12 +62,36 @@ function ballMovement() {
 }
 function paddleMovement() {}
 
-function clearCanvas() {
+function cleanCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+function initEvents() {
+    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
+
+    function keyDownHandler(e) {
+        const { key } = e;
+        if(key === "Right" || key === "ArrowRight") {
+            rightPressed = true;
+        } else if(key === "Left" || key === "ArrowLeft") {
+            leftPressed = true;
+        }
+    }
+
+    function keyUpHandler(e) {
+        const { key } = e;
+        if(key === "Right" || key === "ArrowRight") {
+            rightPressed = false;
+        } else if(key === "Left" || key === "ArrowLeft") {
+            leftPressed = false;
+        }
+    }
+}
+
+
 //funtion root o madre
 function draw() {
-    clearCanvas();
+    cleanCanvas();
     //Dibujando elemnetoa
     drawBall();
     drawPaddle();
