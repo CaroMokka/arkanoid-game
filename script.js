@@ -1,3 +1,4 @@
+//RECUERDA HACER CORRER LA APP DRAW() DE ABAJO ULTIMO LINEA
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");// webGL - BitmapRenderer
 
@@ -16,12 +17,14 @@ let movePositionY = -2;
 //VARIALES PALETA
 const paddleWidth = 50;
 const paddleHeight = 10;
+const PADDLE_SENSIBILITY = 8;
 
 let paddlePositionX = (canvas.width - paddleWidth) / 2;
 let paddlePositionY = canvas.height - paddleHeight - 10;
 
 let rightPressed = false;
 let leftPressed = false;
+
 
 function drawBall() {
     ctx.beginPath();
@@ -60,7 +63,14 @@ function ballMovement() {
     inicialPositionX += movePositionX;
     inicialPositionY += movePositionY;
 }
-function paddleMovement() {}
+function paddleMovement() {
+
+    if(rightPressed) {
+        paddlePositionX += PADDLE_SENSIBILITY;
+    } else if(leftPressed) {
+        paddlePositionX -= PADDLE_SENSIBILITY;
+    }
+} 
 
 function cleanCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -92,16 +102,16 @@ function initEvents() {
 //funtion root o madre
 function draw() {
     cleanCanvas();
-    //Dibujando elemnetoa
+
     drawBall();
     drawPaddle();
     // drawBricks();
 
-    //colisiones y movimientos
     // collisionDetection();
      ballMovement();
-    // paddleMovement();
+     paddleMovement();
 
     window.requestAnimationFrame(draw);//60 frames x seg
 }
 draw();
+initEvents();
