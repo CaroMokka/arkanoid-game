@@ -2,6 +2,9 @@
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d"); // webGL - BitmapRenderer
 
+const $sprite = document.querySelector("#sprite");
+const $bricks = document.querySelector("#bricks")
+
 canvas.width = 448;
 canvas.height = 400;
 
@@ -33,8 +36,20 @@ function drawBall() {
   ctx.closePath();
 }
 function drawPaddle() {
-  ctx.fillStyle = "#09f";
-  ctx.fillRect(paddlePositionX, paddlePositionY, paddleWidth, paddleHeight);
+//   ctx.fillStyle = "#09f";
+//   ctx.fillRect(paddlePositionX, paddlePositionY, paddleWidth, paddleHeight);
+
+  ctx.drawImage(
+      $sprite,
+      29,
+      174,
+      paddleWidth,
+      paddleHeight,
+      paddlePositionX,
+      paddlePositionY,
+      paddleWidth,
+      paddleHeight
+  )
 }
 function drawBricks() {}
 
