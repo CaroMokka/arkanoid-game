@@ -29,7 +29,7 @@ const brickWidth = 30;
 const brickHeight = 14;
 const brickPadding = 2;
 const brickOffSetTop = 80;
-const brickOffSetLeft = 30;
+const brickOffSetLeft = 16;
 const bricks = [];
 
 const BRICK_STATUS = {
@@ -83,7 +83,40 @@ function drawPaddle() {
     paddleHeight
   );
 }
-function drawBricks() {}
+function drawBricks() {
+  for (let c = 0; c < brickCols; c++) {
+    for (let r = 0; r < brickRow; r++) {
+      const currentBrick = bricks[c][r];
+      if(currentBrick.status === BRICK_STATUS.DESTROYED) continue;
+
+      // ctx.fillStyle = "yellow";
+      // ctx.rect(
+      //   currentBrick.x,
+      //   currentBrick.y,
+      //   brickWidth,
+      //   brickHeight
+      // );
+      // ctx.strokeStyle = "black"
+      // ctx.stroke();
+      // ctx.fill();
+
+      const clipX = currentBrick.color * 32;
+
+      ctx.drawImage(
+        $bricks,
+        clipX,
+        0,
+        32,
+        14,
+        currentBrick.x,
+        currentBrick.y,
+        brickWidth,
+        brickHeight
+    
+      );
+    }
+  }
+}
 
 function collisionDetection() {}
 
@@ -156,7 +189,7 @@ function draw() {
 
   drawBall();
   drawPaddle();
-  // drawBricks();
+  drawBricks();
 
   // collisionDetection();
   ballMovement();
