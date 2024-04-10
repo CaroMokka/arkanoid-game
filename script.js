@@ -3,7 +3,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d"); // webGL - BitmapRenderer
 
 const $sprite = document.querySelector("#sprite");
-const $bricks = document.querySelector("#bricks")
+const $bricks = document.querySelector("#bricks");
 
 canvas.width = 448;
 canvas.height = 400;
@@ -22,6 +22,38 @@ const paddleWidth = 50;
 const paddleHeight = 10;
 const PADDLE_SENSITIVITY = 8;
 
+//variables de los ladrillos
+const brickRow = 3;
+const brickCols = 13;
+const brickWidth = 30;
+const brickHeight = 14;
+const brickPadding = 2;
+const brickOffSetTop = 80;
+const brickOffSetLeft = 30;
+const bricks = [];
+
+const BRICK_STATUS = {
+  ACTIVE: 1,
+  DESTROYED: 0,
+};
+
+for (let c = 0; c < brickCols; c++) {
+  bricks[c] = [];
+  for (let r = 0; r < brickRow; r++) {
+    const brickX = c * (brickWidth + brickPadding) + brickOffSetLeft;
+    const brickY = r * (brickHeight + brickPadding) + brickOffSetTop;
+
+    const random = Math.floor(Math.random() * 8); // 0 al 7
+    //guardamos la info de cada ladrillo
+    bricks[c][r] = {
+      x: brickX,
+      y: brickY,
+      status: BRICK_STATUS.ACTIVE,
+      color: random,
+    };
+  }
+}
+
 let paddlePositionX = (canvas.width - paddleWidth) / 2;
 let paddlePositionY = canvas.height - paddleHeight - 10;
 
@@ -36,20 +68,20 @@ function drawBall() {
   ctx.closePath();
 }
 function drawPaddle() {
-//   ctx.fillStyle = "#09f";
-//   ctx.fillRect(paddlePositionX, paddlePositionY, paddleWidth, paddleHeight);
+  //   ctx.fillStyle = "#09f";
+  //   ctx.fillRect(paddlePositionX, paddlePositionY, paddleWidth, paddleHeight);
 
   ctx.drawImage(
-      $sprite,
-      29,
-      174,
-      paddleWidth,
-      paddleHeight,
-      paddlePositionX,
-      paddlePositionY,
-      paddleWidth,
-      paddleHeight
-  )
+    $sprite,
+    29,
+    174,
+    paddleWidth,
+    paddleHeight,
+    paddlePositionX,
+    paddlePositionY,
+    paddleWidth,
+    paddleHeight
+  );
 }
 function drawBricks() {}
 
