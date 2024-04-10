@@ -14,8 +14,8 @@ const ballRadius = 3;
 let inicialPositionX = canvas.width / 2;
 let inicialPositionY = canvas.height - 30;
 
-let movePositionX = 2;
-let movePositionY = -2;
+let movePositionX = 3;
+let movePositionY = -3;
 
 //VARIALES PALETA
 const paddleWidth = 50;
@@ -23,11 +23,11 @@ const paddleHeight = 10;
 const PADDLE_SENSITIVITY = 8;
 
 //variables de los ladrillos
-const brickRow = 3;
+const brickRow = 6;
 const brickCols = 13;
-const brickWidth = 30;
-const brickHeight = 14;
-const brickPadding = 2;
+const brickWidth = 32;
+const brickHeight = 16;
+const brickPadding = 0;
 const brickOffSetTop = 80;
 const brickOffSetLeft = 16;
 const bricks = [];
@@ -106,8 +106,8 @@ function drawBricks() {
         $bricks,
         clipX,
         0,
-        32,
-        14,
+        brickWidth,
+        brickHeight,
         currentBrick.x,
         currentBrick.y,
         brickWidth,
@@ -118,7 +118,28 @@ function drawBricks() {
   }
 }
 
-function collisionDetection() {}
+function collisionDetection() {
+  for (let c = 0; c < brickCols; c++) {
+    for (let r = 0; r < brickRow; r++) {
+      const currentBrick = bricks[c][r];
+      if(currentBrick.status === BRICK_STATUS.DESTROYED) continue;
+
+      const isBallSameXAsBrick = 
+      inicialPositionX > currentBrick.x &&
+      inicialPositionX < currentBrick.x + brickWidth;
+
+      const isBallSameYAsBrick = 
+      inicialPositionX > currentBrick.y &&
+      inicialPositionY < currentBrick.y + brickHeight;
+
+      if(isBallSameXAsBrick && isBallSameYAsBrick) {
+        movePositionY = -movePositionY;
+        currentBrick.status = BRICK_STATUS.DESTROYED;
+      }
+
+    }
+  }
+}
 
 function ballMovement() {
   if (
@@ -191,7 +212,7 @@ function draw() {
   drawPaddle();
   drawBricks();
 
-  // collisionDetection();
+  collisionDetection();
   ballMovement();
   paddleMovement();
 
